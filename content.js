@@ -1,6 +1,7 @@
-console.log("Content:");
-const head = document.head.innerHTML;
-const body = document.body.innerHTML;
+const current = new Date();
+var currentHour = current.getHours();
+var currentMinute = current.getMinutes();
+
 const generateSTYLES = () => {
   return `<style>@import url(https://fonts.googleapis.com/css?family=opensans:500);
   body {
@@ -67,6 +68,7 @@ const generateSTYLES = () => {
     width: 420px;
     height: 10px;
     z-index: -10;
+    border: 20px;
   }
   
   hr:after {
@@ -244,30 +246,32 @@ const generateHTML = () => {
           <div class="cloud x5"></div>
       </div>
       <div class='c'>
-          <div class='_404'>404</div>
+          <div class='_404'>Sleep</div>
           <hr>
-          <div class='_1'>GET BACK TO SLEEP</div>
+          <div class='_1'>Bro you got dreams to chase,</div>
+          <div class='_1'>so you should rest well!!!</div>
       </div>
     `;
 };
 
-const current = new Date();
-var currentHour = current.getHours();
-var currentMinute = current.getMinutes();
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-      if (request.msgToContent === true) {
-        console.log(request.msgToContent);
-        window.location.reload(true);    
-      }
+    if (request.msgToContent === true) {
+      console.log(request.msgToContent);
+      window.location.reload(true);    
+    }  
+    return true;
   }
 );
 
 chrome.storage.sync.get(["toBlock"], ({toBlock}) => {
   if (toBlock === true) {
-    chrome.storage.sync.get(["timeControl"], ({timeControl}) => {
-      if (timeControl[0] * 60 + timeControl[1] <=  currentHour * 60 + currentMinute) {
+      chrome.storage.sync.get(["timeControl"], ({timeControl}) => {
+      if ((currentHour < 24) & (timeControl[0] * 60 + timeControl[1] <=  currentHour * 60 + currentMinute)) {
+        document.head.innerHTML = generateSTYLES();
+        document.body.innerHTML = generateHTML();
+      }
+      if ((currentHour >= 24 & currentHour < 9) & (timeControl[3] * 60 + timeControl[4] >=  currentHour * 60 + currentMinute)) {
         document.head.innerHTML = generateSTYLES();
         document.body.innerHTML = generateHTML();
       }

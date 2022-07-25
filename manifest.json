@@ -1,11 +1,11 @@
 {
   "name": "Sleep Control",
-  "version": "1.0",
+  "version": "1.0.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
-  "description": "__Project_Description__",
+  "description": "Chrome extension that helps you to improve your sleep",
   "homepage_url": "https://rainymood.com/",
   "permissions": [
     "storage",
@@ -22,7 +22,7 @@
     "128": "/images/logo_light128.png"
   },
   "action": {
-    "default_title": "pls work!!",
+    "default_title": "Popup",
     "default_popup": "popup.html"
   },
   "content_scripts": [
